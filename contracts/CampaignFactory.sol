@@ -13,10 +13,11 @@ contract cpFactory {
         implementationCp = _implementationCp;
     }
 
-    function createCp(address _cpAdmin, string memory _cpMetadata, uint256 _cpTargetAmount, uint256 _cpStart, uint256 _cpEnd) external {
+    function createCp(address _cpAdmin, string memory _cpMetadata, uint256 _cpTargetAmount, uint256 _cpStart, uint256 _cpEnd) external returns(address) {
         address newCp = Clones.clone(implementationCp); // -> creates a new campaign contract
         Campaign(newCp).init(USDC_ADDRESS, _cpAdmin, _cpMetadata, _cpTargetAmount, _cpStart, _cpEnd);
         emit CpCreated(newCp, _cpAdmin);
+        return(newCp);
     }
 
 }
